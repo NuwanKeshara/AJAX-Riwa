@@ -12,6 +12,11 @@ function validateItemForm() {
     if ($("#productID").val().trim() == "") {
         return "Insert Product ID";
     }
+	// numerical value check
+    var productID = $("#productID").val().trim();
+    if (!$.isNumeric(productID)) {
+        return "Insert a valid product ID.";
+    }
     // Contact Name
     if ($("#contactName").val().trim() == "") {
         return "Insert Contact Name";
@@ -23,6 +28,12 @@ function validateItemForm() {
     // Contact Mail-------------------------------
     if ($("#contactMail").val().trim() == "") {
         return "Insert Contact Mail";
+    }
+	// valid mail check-------------------------------
+	var mail = $("#contactMail").val().trim();
+	var format = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!format.test(mail)) {
+        return "Insert a valid Mail";
     }
 	// Message-------------------------------
     if ($("#message").val().trim() == "") {
