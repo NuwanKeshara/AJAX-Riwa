@@ -13,7 +13,7 @@ public interface IFundRequestImpl {
 
 	String deleteRequest(int fundID);
 
-	String updateRequest(int fundID, String clientID, int productID, String contactName, String contactNo,
+	String updateRequest(int fundID, int productID, String contactName, String contactNo,
 			String contactMail, String message, String orgName);
 
 	List<FundRequest> getAllRequests();

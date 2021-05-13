@@ -45,7 +45,7 @@ public class FundRequestImpl implements IFundRequestImpl {
 				return "Error while connecting to the database";
 			}
 			// Prepare the html table to be displayed
-			output = "<table id=\"mytable\" class=\"table table-bordred table-striped\"><tr>"+
+			output = "<table border='1'><tr>"+
 					"<thead>" +
 					"<th>Fund ID</th>"+
 					"<th>Client ID</th>" + 
@@ -151,7 +151,7 @@ public class FundRequestImpl implements IFundRequestImpl {
 		// TODO Auto-generated method stub
 		String id = "kamal";//getSession();
 		String output = "";
-		String pass = "";
+		
 
 		try {
 			Connection con = connect();
@@ -175,21 +175,21 @@ public class FundRequestImpl implements IFundRequestImpl {
 
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully";
-			pass = "{\"status\":\"success\"}";
+			String newItems = readFundRequests();
+			output = "{\"status\":\"123\",\"data1\": \"" + newItems + "\"}";
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			output = "Error while inserting the request.";
-			pass = "{\"status\":\"error\"}";
+			output = "{\"status\":\"error\", \"data\":\"Error while inserting the item.\"}";
 
 		}
-		return pass;
+		System.out.println(output);
+		return output;
 	}
 
 	// update a fund request details
 
 	@Override
-	public String updateRequest(int fundID, String clientID, int productID, String contactName, String contactNo,
+	public String updateRequest(int fundID, int productID, String contactName, String contactNo,
 			String contactMail, String message, String orgName) {
 		// TODO Auto-generated method stub
 		String output = "";
@@ -199,29 +199,31 @@ public class FundRequestImpl implements IFundRequestImpl {
 				return "Error while connecting to the database";
 			}
 			// create a prepared statement
-			String query = "UPDATE fundrequests SET clientID=?,productID=?,contactName=?,contactNo=?"
+			String query = "UPDATE fundrequests SET productID=?,contactName=?,contactNo=?"
 					+ ",contactMail=?,message=?,orgName=?,date=?  WHERE fundID=?";
 
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
-			preparedStmt.setString(1, clientID);
-			preparedStmt.setInt(2, productID);
-			preparedStmt.setString(3, contactName);
-			preparedStmt.setString(4, contactNo);
-			preparedStmt.setString(5, contactMail);
-			preparedStmt.setString(6, message);
-			preparedStmt.setString(7, orgName);
-			preparedStmt.setDate(8, new java.sql.Date(new java.util.Date().getTime()));
-			preparedStmt.setInt(9, fundID);
+			
+			preparedStmt.setInt(1, productID);
+			preparedStmt.setString(2, contactName);
+			preparedStmt.setString(3, contactNo);
+			preparedStmt.setString(4, contactMail);
+			preparedStmt.setString(5, message);
+			preparedStmt.setString(6, orgName);
+			preparedStmt.setDate(7, new java.sql.Date(new java.util.Date().getTime()));
+			preparedStmt.setInt(8, fundID);
 			
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			String newItems = readFundRequests();
+			output = "{\"status\":\"123\", \"data1\": \"" + newItems + "\"}";
 		} catch (Exception e) {
-			output = "Error while updating the request.";
+			output = "{\"status\":\"error\", \"123\":\"Error while inserting the item.\"}";
 			System.err.println(e.getMessage());
 		}
+		System.out.println(output);
 		return output;
 	}
 
@@ -232,7 +234,7 @@ public class FundRequestImpl implements IFundRequestImpl {
 		// TODO Auto-generated method stub
 		
 		String pass = "";
-		String output = "";
+		
 		try {
 			Connection con = connect();
 			if (con == null) {
@@ -248,12 +250,15 @@ public class FundRequestImpl implements IFundRequestImpl {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Deleted successfully";
-			pass = "{\"status\":\"success\"}";
+			FundRequestImpl obj = new FundRequestImpl();
+			String newItems = obj.readFundRequests();
+			
+			
+			pass = "{\"status\":\"success\" , \"data\" : \"" + newItems + "\"}";
 		} catch (Exception e) {
-			output = "Error while deleting the request.";
+			
 			System.err.println(e.getMessage());
-			pass = "{\"status\":\"error\"}";
+			pass = "{\"status\":\"error\", \"data\":\"Error while deleting the item.\"}";
 		}
 		return pass;
 	}

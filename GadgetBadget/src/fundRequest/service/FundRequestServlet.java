@@ -46,8 +46,8 @@ public class FundRequestServlet extends HttpServlet {
 		String output = fundObj.insertRequest(
 				Integer.parseInt(request.getParameter("productID")), 
 				request.getParameter("contactName"), 
-				request.getParameter("phone"), 
-				request.getParameter("email"),
+				request.getParameter("contactNo"), 
+				request.getParameter("contactMail"),
 				request.getParameter("message"), 
 				request.getParameter("companyName"));
 		response.getWriter().write(output);
@@ -58,6 +58,17 @@ public class FundRequestServlet extends HttpServlet {
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		Map paras = getParasMap(request);
+		
+		String output = fundObj.updateRequest(
+				Integer.parseInt(paras.get("hidItemIDSave").toString()), 
+				Integer.parseInt(paras.get("productID").toString()), 
+				paras.get("contactName").toString(), 
+				paras.get("contactNo").toString(), 
+				paras.get("contactMail").toString(),
+				paras.get("message").toString(), 
+				paras.get("companyName").toString());
+		response.getWriter().write(output);
 	}
 
 	/**
@@ -65,9 +76,8 @@ public class FundRequestServlet extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Map<String,String> parase = getParasMap(request); 
+		Map parase = getParasMap(request); 
 		String x = parase.get("itemID").toString();
-		System.out.println(x); 
 		String output = fundObj.deleteRequest(Integer.parseInt(x)); 
 		response.getWriter().write(output);
 	}
