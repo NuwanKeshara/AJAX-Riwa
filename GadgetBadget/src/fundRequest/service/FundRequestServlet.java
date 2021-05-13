@@ -61,7 +61,7 @@ public class FundRequestServlet extends HttpServlet {
 		Map paras = getParasMap(request);
 		
 		String output = fundObj.updateRequest(
-				Integer.parseInt(paras.get("hidItemIDSave").toString()), 
+				Integer.parseInt(paras.get("fundIDSave").toString()), 
 				Integer.parseInt(paras.get("productID").toString()), 
 				paras.get("contactName").toString(), 
 				paras.get("contactNo").toString(), 
@@ -77,7 +77,7 @@ public class FundRequestServlet extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map parase = getParasMap(request); 
-		String x = parase.get("itemID").toString();
+		String x = parase.get("fundID").toString();
 		String output = fundObj.deleteRequest(Integer.parseInt(x)); 
 		response.getWriter().write(output);
 	}

@@ -51,31 +51,31 @@ $(document).on("click", "#btnSave", function (event) {
     }
     // If valid------------------------
 	else {
-    var type = ($("#hidItemIDSave").val() == "") ? "POST" : "PUT";
+    var type = ($("#fundIDSave").val() == "") ? "POST" : "PUT";
     $.ajax(
         {
             url: "FundRequestServlet",
             type: type,
-            data: $("#formItem").serialize(),
+            data: $("#formRequest").serialize(),
             dataType: "text",
             complete: function(response, status) {
-                onItemSaveComplete(response.responseText, status);
+                onRequestSave(response.responseText, status);
             }
         });
 }
 });
 
-function onItemSaveComplete(response, status) {
+function onRequestSave(response, status) {
 	
     if (status == "success") {
 	
         var resultSet = JSON.parse(response);
-        if (resultSet.status.trim() == "123") {
+        if (resultSet.status.trim() == "success") {
             $("#alertSuccess").text("Successfully saved.");
             $("#alertSuccess").show();
-            $("#divItemsGrid").html(resultSet.data1);
+            $("#divRequestsGrid").html(resultSet.requests);
         } else if (resultSet.status.trim() == "error") {
-            $("#alertError").text(resultSet.data);
+            $("#alertError").text(resultSet.requests);
             $("#alertError").show();
         }
     } else if (status == "error") {
@@ -85,12 +85,12 @@ function onItemSaveComplete(response, status) {
         $("#alertError").text("Unknown error while saving..");
         $("#alertError").show();
     }
-    $("#hidItemIDSave").val("");
-    $("#formItem")[0].reset();
+    $("#fundIDSave").val("");
+    $("#formRequest")[0].reset();
 }
 
 $(document).on("click", ".btnUpdate", function (event) {
-    $("#hidItemIDSave").val($(this).data("itemid"));
+    $("#fundIDSave").val($(this).data("fundid"));
     $("#productID").val($(this).closest("tr").find('td:eq(2)').text());
     $("#contactName").val($(this).closest("tr").find('td:eq(3)').text());
     $("#contactNo").val($(this).closest("tr").find('td:eq(4)').text());
@@ -104,23 +104,23 @@ $(document).on("click", ".btnRemove", function (event) {
         {
             url: "FundRequestServlet",
             type: "DELETE",
-            data: "itemID=" + $(this).data("itemid"),
+            data: "fundID=" + $(this).data("fundid"),
             dataType: "text",
             complete: function (response, status) {
-                onItemDeleteComplete(response.responseText, status);
+                onRequestDelete(response.responseText, status);
             }
         });
 });
 
-function onItemDeleteComplete(response, status) {
+function onRequestDelete(response, status) {
     if (status == "success") {
         var resultSet = JSON.parse(response);
         if (resultSet.status.trim() == "success") {
             $("#alertSuccess").text("Successfully deleted.");
             $("#alertSuccess").show();
-            $("#divItemsGrid").html(resultSet.data);
+            $("#divRequestsGrid").html(resultSet.requests);
         } else if (resultSet.status.trim() == "error") {
-            $("#alertError").text(resultSet.data);
+            $("#alertError").text(resultSet.requests);
             $("#alertError").show();
         }
     } else if (status == "error") {

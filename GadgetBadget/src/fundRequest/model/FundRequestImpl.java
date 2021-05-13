@@ -86,9 +86,9 @@ public class FundRequestImpl implements IFundRequestImpl {
 				output += "<td>" + date + "</td>";
 				// buttons
 				output += "<td><input name='btnUpdate' type='button' value='Update' "
-						+ "class='btnUpdate btn btn-secondary' data-itemid='" + fundID + "'></td>"
+						+ "class='btnUpdate btn btn-secondary' data-fundid='" + fundID + "'></td>"
 						+ "<td><input name='btnRemove' type='button' value='Remove' "
-						+ "class='btnRemove btn btn-danger' data-itemid='" + fundID + "'></td></tr>";
+						+ "class='btnRemove btn btn-danger' data-fundid='" + fundID + "'></td></tr>";
 			}
 			con.close();
 			// Complete the html table
@@ -175,14 +175,14 @@ public class FundRequestImpl implements IFundRequestImpl {
 
 			preparedStmt.execute();
 			con.close();
-			String newItems = readFundRequests();
-			output = "{\"status\":\"123\",\"data1\": \"" + newItems + "\"}";
+			String requests = readFundRequests();
+			output = "{\"status\":\"success\",\"requests\": \"" + requests + "\"}";
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			output = "{\"status\":\"error\", \"data\":\"Error while inserting the item.\"}";
+			output = "{\"status\":\"error\", \"requests\":\"Error while inserting the item.\"}";
 
 		}
-		System.out.println(output);
+		
 		return output;
 	}
 
@@ -217,13 +217,13 @@ public class FundRequestImpl implements IFundRequestImpl {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			String newItems = readFundRequests();
-			output = "{\"status\":\"123\", \"data1\": \"" + newItems + "\"}";
+			String requests = readFundRequests();
+			output = "{\"status\":\"success\", \"requests\": \"" + requests + "\"}";
 		} catch (Exception e) {
-			output = "{\"status\":\"error\", \"123\":\"Error while inserting the item.\"}";
+			output = "{\"status\":\"error\", \"requests\":\"Error while inserting the item.\"}";
 			System.err.println(e.getMessage());
 		}
-		System.out.println(output);
+		
 		return output;
 	}
 
@@ -250,15 +250,14 @@ public class FundRequestImpl implements IFundRequestImpl {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			FundRequestImpl obj = new FundRequestImpl();
-			String newItems = obj.readFundRequests();
 			
+			String requests = readFundRequests();
 			
-			pass = "{\"status\":\"success\" , \"data\" : \"" + newItems + "\"}";
+			pass = "{\"status\":\"success\" , \"requests\" : \"" + requests + "\"}";
 		} catch (Exception e) {
 			
 			System.err.println(e.getMessage());
-			pass = "{\"status\":\"error\", \"data\":\"Error while deleting the item.\"}";
+			pass = "{\"status\":\"error\", \"requests\":\"Error while deleting the item.\"}";
 		}
 		return pass;
 	}

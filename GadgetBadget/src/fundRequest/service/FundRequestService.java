@@ -112,9 +112,10 @@ public class FundRequestService {
 		 * jObject.get("orgName").getAsString();
 		 */
 
-		String output = fr.updateRequest(fundID, clientID, productID, contactName, contactNo, contactMail, message,
-				orgName);
-		return output;
+		//String output = fr.updateRequest(fundID, clientID, productID, contactName, contactNo, contactMail, message,
+			//	orgName);
+		//return output;
+		return null;
 	}
 	
 	//

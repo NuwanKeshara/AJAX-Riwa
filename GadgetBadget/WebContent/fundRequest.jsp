@@ -19,7 +19,7 @@
 
 
 				<h1>Fund Request</h1>
-				<form id='formItem' name='formItem'>
+				<form id='formRequest' name='formRequest'>
 						ProductID : <input id='productID' name='productID' type='text'
 						class='form-control col-md-3'><br> 
 						
@@ -48,7 +48,7 @@
 						class='btn btn-primary'> 
 						
 						<input type='hidden'
-						id='hidItemIDSave' name='hidItemIDSave' value=''>
+						id='fundIDSave' name='fundIDSave' value=''>
 				</form>
 
 				<br>
@@ -58,7 +58,7 @@
 				<div id='alertError' name='alertError' class='alert alert-danger'></div>
 
 				<br>
-				<div id="divItemsGrid">
+				<div id="divRequestsGrid">
 					<%
 					FundRequestImpl obj = new FundRequestImpl();
 					out.print(obj.readFundRequests());
