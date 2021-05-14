@@ -142,3 +142,25 @@ function onRequestDelete(response, status) {
         $("#alertError").show();
     }
 }
+
+$(document).on("click", "#btnLogout", function(event) {
+	
+	$.ajax(
+		{
+			url: "LoginAuthServlet",
+			typ: "DELETE",
+			data: "",
+			dataType: "text",
+			complete: function(response, status) {
+				onLogoutComplete(response.responseText, status);
+			}
+		});
+});
+function onLogoutComplete(response, status) {
+	if (status == "success") {
+		if (response.trim() == "success") {
+			//Redirect to index------------------
+			document.location = "login.jsp";
+		}
+	}
+}

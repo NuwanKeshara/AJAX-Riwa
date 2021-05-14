@@ -403,4 +403,26 @@ public class FundRequestImpl implements IFundRequestImpl {
 		return clientID;
 	}
 	
+	public String login(String un, String pw) {
+		String output = "";
+
+		if (!un.equals("nuwan"))// Hard coded test value
+		{
+			output = "Invalid username";
+		}
+
+		else if (un.equals("nuwan"))// Hard coded test value
+		{
+			if (!pw.equals("123"))// Hard coded test value
+			{
+				output = "Invalid password";
+			}
+
+			else if (pw.equals("123"))// Hard coded test value {
+				output = "success";
+		}
+
+		return output;
+	}
+	
 }
